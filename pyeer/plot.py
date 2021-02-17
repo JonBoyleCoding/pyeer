@@ -11,7 +11,7 @@ STYLES = ['s--', 'v--', 'o--', '^--', ',--', '<--', '>--', '1--', '2--'
 
 
 def plt_det_curve(stats, ids, line_width=3, lgf_size=15, save_plots=True,
-                  dpi=None, save_path='', ext='.png'):
+                  dpi=None, save_path='', ext='.png', pre_title="", label_fnmr="FNMR", label_fmr="FMR"):
     """Plot the DET curve
 
     @param stats: An iterable with instances of the named tuple Stats
@@ -36,20 +36,30 @@ def plt_det_curve(stats, ids, line_width=3, lgf_size=15, save_plots=True,
                 formats are: (.png, .pdf, .ps, .eps and .svg)
                 (default='.png')
     @type ext: str
+    @param pre_title: A heading to place prior to the title of the graphs
+    @type pre_title: str
+    @param label_fnmr: Label to use for FNMR
+    @type label_fnmr: str
+    @param label_fmr: Label to use for FMR
+    @type label_fmr: str
     """
     det_fig = plt.figure()
     det_lg_fig = plt.figure()
 
+    if pre_title != "":
+        if pre_title[-1] != " ":
+            pre_title += " "
+
     det_plot = det_fig.add_subplot(111)
-    det_plot.set_title('DET Curves')
-    det_plot.set_ylabel('FNMR')
-    det_plot.set_xlabel('FMR')
+    det_plot.set_title(pre_title + 'DET Curves')
+    det_plot.set_ylabel(label_fnmr)
+    det_plot.set_xlabel(label_fmr)
     det_plot.grid(True)
 
     det_lg_plot = det_lg_fig.add_subplot(111)
-    det_lg_plot.set_title('DET Curves (Log scale)')
-    det_lg_plot.set_ylabel('FNMR')
-    det_lg_plot.set_xlabel('FMR')
+    det_lg_plot.set_title(pre_title + 'DET Curves (Log scale)')
+    det_lg_plot.set_ylabel(label_fnmr)
+    det_lg_plot.set_xlabel(label_fmr)
     det_lg_plot.set_yscale('log')
     det_lg_plot.set_xscale('log')
     det_lg_plot.grid(True, which='both', ls='--')
@@ -74,7 +84,7 @@ def plt_det_curve(stats, ids, line_width=3, lgf_size=15, save_plots=True,
 
 
 def plt_roc_curve(stats, ids, line_width=3, lgf_size=15, save_plots=True,
-                  dpi=None, save_path='', ext='.png'):
+                  dpi=None, save_path='', ext='.png', pre_title="", label_fnmr="FNMR", label_fmr="FMR"):
     """Plot the ROC curve
 
     @param stats: An iterable with instances of the named tuple Stats
@@ -99,23 +109,33 @@ def plt_roc_curve(stats, ids, line_width=3, lgf_size=15, save_plots=True,
                 formats are: (.png, .pdf, .ps, .eps and .svg)
                 (default='.png')
     @type ext: str
+    @param pre_title: A heading to place prior to the title of the graphs
+    @type pre_title: str
+    @param label_fnmr: Label to use for FNMR
+    @type label_fnmr: str
+    @param label_fmr: Label to use for FMR
+    @type label_fmr: str
     """
     roc_fig = plt.figure()
     roc_lg_fig = plt.figure()
 
+    if pre_title != "":
+        if pre_title[-1] != " ":
+            pre_title += " "
+
     roc_plot = roc_fig.add_subplot(111)
-    roc_plot.set_title('ROC Curves')
+    roc_plot.set_title(pre_title + 'ROC Curves')
     roc_plot.grid(True)
-    roc_plot.set_ylabel('1 - FNMR')
-    roc_plot.set_xlabel('FMR')
+    roc_plot.set_ylabel('1 - ' + label_fnmr)
+    roc_plot.set_xlabel(label_fmr)
     roc_plot.plot([0, 1], [0, 1], 'k--', linewidth=line_width)
     roc_plot.grid(True)
 
     roc_lg_plot = roc_lg_fig.add_subplot(111)
-    roc_lg_plot.set_title('ROC Curves (Log scale)')
+    roc_lg_plot.set_title(pre_title + 'ROC Curves (Log scale)')
     roc_lg_plot.grid(True)
-    roc_lg_plot.set_ylabel('1 - FNMR')
-    roc_lg_plot.set_xlabel('FMR')
+    roc_lg_plot.set_ylabel('1 - ' + label_fnmr)
+    roc_lg_plot.set_xlabel(label_fmr)
     roc_lg_plot.set_xscale('log')
     roc_lg_plot.grid(True, which='minor', ls='--')
 
@@ -142,7 +162,7 @@ def plt_roc_curve(stats, ids, line_width=3, lgf_size=15, save_plots=True,
 
 def plt_distributions(stats, ids, hformat=False, bins=100,
                       lgf_size=15, save_plots=True, dpi=None,
-                      save_path='', ext='.png'):
+                      save_path='', ext='.png', pre_title=""):
     """Plot the scores distribution of each experiment
 
     @param stats: An iterable with instances of the named tuple Stats
@@ -171,10 +191,17 @@ def plt_distributions(stats, ids, hformat=False, bins=100,
                 formats are: (.png, .pdf, .ps, .eps and .svg)
                 (default='.png')
     @type ext: str
+    @param pre_title: A heading to place prior to the title of the graphs
+    @type pre_title: str
     """
+
+    if pre_title != "":
+        if pre_title[-1] != " ":
+            pre_title += " "
+
     for i, st in enumerate(stats):
         # Plotting score distributions
-        title = 'Score distributions experiment: ' + ids[i]
+        title = pre_title + 'Score distributions experiment: ' + ids[i]
         fig, ax1 = plt.subplots()
 
         ax1.grid(False)
@@ -217,7 +244,7 @@ def plt_distributions(stats, ids, hformat=False, bins=100,
 
 
 def plt_error_curves(stats, ids, line_width=3, lgf_size=15, save_plots=True,
-                     dpi=None, save_path='', ext='.png'):
+                     dpi=None, save_path='', ext='.png', pre_title="", label_fnmr="FNMR", label_fmr="FMR"):
     """Plot FMR and FNMR curves for each experiment
 
     @param stats: An iterable with instances of the named tuple Stats
@@ -245,7 +272,18 @@ def plt_error_curves(stats, ids, line_width=3, lgf_size=15, save_plots=True,
                 formats are: (.png, .pdf, .ps, .eps and .svg)
                 (default='.png')
     @type ext: str
+    @param pre_title: A heading to place prior to the title of the graphs
+    @type pre_title: str
+    @param label_fnmr: Label to use for FNMR
+    @type label_fnmr: str
+    @param label_fmr: Label to use for FMR
+    @type label_fmr: str
     """
+
+    if pre_title != "":
+        if pre_title[-1] != " ":
+            pre_title += " "
+
     for i, st in enumerate(stats):
         # Plotting FMR and FNMR curves
         eer_fig = plt.figure()
@@ -253,15 +291,15 @@ def plt_error_curves(stats, ids, line_width=3, lgf_size=15, save_plots=True,
         eer_plot.grid(True)
         eer_plot.set_ylabel('Error')
         eer_plot.set_xlabel('Matching Scores')
-        eer_plot.set_title('FMR and FNMR Curves')
+        eer_plot.set_title(pre_title + '{FMR} and {FNMR} Curves'.format(FMR=label_fmr, FNMR=label_fnmr))
         eer_plot.plot(st.thrs, st.fmr, linewidth=line_width,
-                      label=ids[i] + ' (FMR)')
+                      label=ids[i] + ' ({FMR})'.format(FMR=label_fmr))
         eer_plot.plot(st.thrs, st.fnmr, linewidth=line_width,
-                      label=ids[i] + ' (FNMR)')
+                      label=ids[i] + ' ({FNMR})'.format(FNMR=label_fnmr))
         eer_plot.legend(loc='best', prop=FontProperties(size=lgf_size))
 
         if save_plots:
-            fname = 'FMR and FNMR curves (%s)' % ids[i] + ext
+            fname = '{FMR} and {FNMR} curves ({})'.format(ids[i] + ext, FMR=label_fmr, FNMR=label_fnmr)
             eer_fig.savefig(join(save_path, fname), dpi=dpi)
             plt.close('all')
         else:
@@ -270,7 +308,7 @@ def plt_error_curves(stats, ids, line_width=3, lgf_size=15, save_plots=True,
 
 def plot_eer_stats(stats, ids, line_width=3, hformat=False, bins=100,
                    lgf_size=15, save_plots=True, dpi=None, save_path='',
-                   ext='.png'):
+                   ext='.png', pre_title="", label_fnmr="FNMR", label_fmr="FMR"):
     """Plot a series of graphs from the given stats
 
     @param stats: An iterable with instances of the named tuple Stats
@@ -301,14 +339,20 @@ def plot_eer_stats(stats, ids, line_width=3, hformat=False, bins=100,
                 formats are: (.png, .pdf, .ps, .eps and .svg)
                 (default='.png')
     @type ext: str
+    @param pre_title: A heading to place prior to the title of the graphs
+    @type pre_title: str
+    @param label_fnmr: Label to use for FNMR
+    @type label_fnmr: str
+    @param label_fmr: Label to use for FMR
+    @type label_fmr: str
     """
     # Plotting the DET curve
     plt_det_curve(stats, ids, line_width, lgf_size, save_plots,
-                  dpi, save_path, ext)
+                  dpi, save_path, ext, pre_title, label_fnmr=label_fnmr, label_fmr=label_fmr)
 
     # Plotting the ROC curve
     plt_roc_curve(stats, ids, line_width, lgf_size, save_plots,
-                  dpi, save_path, ext)
+                  dpi, save_path, ext, pre_title, label_fnmr=label_fnmr, label_fmr=label_fmr)
 
     # Plotting scores distribution
     plt_distributions(stats, ids, hformat, bins, lgf_size, save_plots,
@@ -316,7 +360,7 @@ def plot_eer_stats(stats, ids, line_width=3, hformat=False, bins=100,
 
     # Plotting error curves
     plt_error_curves(stats, ids, line_width, lgf_size, save_plots,
-                     dpi, save_path, ext)
+                     dpi, save_path, ext, pre_title, label_fnmr=label_fnmr, label_fmr=label_fmr)
 
 
 def plot_cmc_stats(stats, max_rank, line_width=3, lgf_size=15,
