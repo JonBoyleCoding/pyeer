@@ -299,7 +299,7 @@ def plt_error_curves(stats, ids, line_width=3, lgf_size=15, save_plots=True,
         eer_plot.legend(loc='best', prop=FontProperties(size=lgf_size))
 
         if save_plots:
-            fname = '{FMR} and {FNMR} curves ({})'.format(ids[i] + ext, FMR=label_fmr, FNMR=label_fnmr)
+            fname = '{FMR} and {FNMR} curves {}'.format(ids[i] + ext, FMR=label_fmr, FNMR=label_fnmr)
             eer_fig.savefig(join(save_path, fname), dpi=dpi)
             plt.close('all')
         else:
