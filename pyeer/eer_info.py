@@ -254,5 +254,5 @@ def get_eer_stats(gen_scores, imp_scores, hformat=False, ds_scores=False):
                  eer_low=eer_low, eer_high=eer_high, decidability=dec,
                  j_index=j_index, j_index_th=j_index_th, eer_th=eer_th,
                  mccoef=mccoef, mccoef_th=mccoef_th, fmr0_th=fmr0_th,
-                fmr1000_th=fmr1000_th, fmr100_th=fmr100_th,
+                 fmr10000_th=fmr10000_th, fmr1000_th=fmr1000_th, fmr100_th=fmr100_th,
                  fmr20_th=fmr20_th, fmr10_th=fmr10_th, fnmr0_th=fnmr0_th)
